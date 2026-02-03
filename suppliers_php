@@ -1,0 +1,21 @@
+
+<?php
+session_start();
+include('../db_connection.php');
+
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin','staff'])) die("Access denied!");
+
+if (isset($_POST['save'])) {
+    $name = $_POST['name'];
+    $contact = $_POST['contact'];
+    mysqli_query($conn, "INSERT INTO suppliers (name, contact) VALUES ('$name','$contact')");
+    echo "Supplier added!";
+}
+?>
+
+<h2>Add Supplier</h2>
+<form method="POST">
+    <input type="text" name="name" placeholder="Supplier Name" required><br>
+    <input type="text" name="contact" placeholder="Contact" required><br>
+    <button name="save">Save</button>
+</form>
